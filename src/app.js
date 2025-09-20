@@ -1,4 +1,7 @@
 import express from "express";
+import postRouter from "./routers/posts";
+import userRouter from "./routers/user";
+import productRouter from "./routers/products";
 
 const app = express();
 
@@ -21,6 +24,15 @@ app.get("/api/posts/sum", (req, res) => {
   const tong = number1 + number2
   res.send(`Sum: Tổng của ${number1} và ${number2} là ${tong}`);
 });
+
+// app.use: Sử dụng tiền tố Router: /posts
+// PostRouter: toan bo routing có trong postRouter
+app.use("/api/posts",postRouter);
+app.use("/api/user",userRouter);
+app.use("/api/product",productRouter);
+
+
+
 
 app.listen(3000, () => {
   console.log(`Server is running on port http://localhost:3000`);
