@@ -1,38 +1,32 @@
 import express from "express";
-import postRouter from "./routers/posts";
-import userRouter from "./routers/user";
-import productRouter from "./routers/products";
+import router from "./routers";
+import morgan from "morgan";
 
 const app = express();
 
-// Route tên 
-app.get("/api/posts/greet", (req, res) => { // Call back nhận 2 tham số request, response
+// Middleware log request
+// new Date().toLocaleTimeString() → lấy thời gian hiện tại (giờ:phút:giây).
+// req.method → phương thức HTTP (GET, POST, PUT, DELETE...).
+// req.url → đường dẫn mà client request.
+const logRequestTime = (req, res, next) => {
+  console.log(`[${new Date().toLocaleTimeString()}] ${req.method} ${req.url}`);
+  next();
+};
+app.use(logRequestTime);
 
-  // req: du lieu gui tu client (fe)
-  // res: du lieu tu server tra ve (fe)
-  // request
-  const name = req.query.name
+// Dùng morgan để log trong chế độ dev
+app.use(morgan('dev'));
 
-  res.send(`Hi ${name}`);
-});
-
-// Route tính tổng
-app.get("/api/posts/sum", (req, res) => {
-
-  const number1 = Number(req.query.number1)
-  const number2 = Number(req.query.number2)
-  const tong = number1 + number2
-  res.send(`Sum: Tổng của ${number1} và ${number2} là ${tong}`);
-});
+// Middleware tích hợp để parse JSON: req.body
+app.use(express.json());
 
 // app.use: Sử dụng tiền tố Router: /posts
-// PostRouter: toan bo routing có trong postRouter
-app.use("/api/posts",postRouter);
-app.use("/api/user",userRouter);
-app.use("/api/product",productRouter);
+//Api tổng: index.js: localhost3000/api/...
+app.use("/api/",router);
 
-
-
+app.get("/",(req,res)=>{
+    res.send("Chào mừng bạn tới trang bán hàng");
+})
 
 app.listen(3000, () => {
   console.log(`Server is running on port http://localhost:3000`);
