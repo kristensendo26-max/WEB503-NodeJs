@@ -20,6 +20,8 @@ app.use(morgan('dev'));
 // Middleware tích hợp để parse JSON: req.body
 app.use(express.json());
 
+app.use(express.urlencoded({ extended: true }));
+
 // app.use: Sử dụng tiền tố Router: /posts
 //Api tổng: index.js: localhost3000/api/...
 app.use("/api/",router);
