@@ -1,6 +1,7 @@
 import express from "express";
 import router from "./routers";
 import morgan from "morgan";
+import mongoose from "mongoose";
 
 const app = express();
 
@@ -21,6 +22,10 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
+
+mongoose.connect('mongodb://localhost:27017/test_web503_nodejs')
+.then(() => console.log('Connected to MongoDB'))
+.catch(err => console.error('Could not connect to MongoDB:', err));
 
 // app.use: Sử dụng tiền tố Router: /posts
 //Api tổng: index.js: localhost3000/api/...

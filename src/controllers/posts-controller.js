@@ -1,12 +1,18 @@
+import Post from "../models/Post";
+
 let posts = [
     {id: 1, title: "Đây là bài viết 1", content: "Nội dung bài viết 1"},
     {id: 2, title: "Bài viết 2", content: "Nội dung bài viết 2"},
 ];
 
 // Lấy tất cả dữ liệu 
-export function getAllPosts(req,res){
-    // Trả về thêm 1 số dữ liệu cho người dùng
-    res.json(posts);
+export const getAllPosts = async (req,res) =>{
+    try {
+        const posts = await Post.find();
+        return res.json(posts);
+    } catch (error) {
+        return res.status(500).json({error: "Lỗi server", message: error.message});
+    }
 }
 
 // Tìm dữ liệu theo id
@@ -20,11 +26,24 @@ export function getPostById(req,res){
 }
 
 // Thêm dữ liệu
-export function addPost(req,res){
-    const {title,content} = req.body;
-    const newPost = {id: posts.length > 0 ? posts[posts.length - 1].id + 1 : 1,title,content}
-    posts.push(newPost);
-    res.json(newPost);
+export const addPost = async (req,res)=>{
+    
+    try {
+        // Model.create(data) : data = req.body, Model = Post
+        const newPost = await Post.create(req.body)
+
+        return res.status(201).json({
+            message: "Thêm thành công",
+            data: newPost 
+        })
+    } catch (error) {
+        return res.status(400).json({message: error.message})
+    }
+
+    // const {title,content} = req.body;
+    // const newPost = {id: posts.length > 0 ? posts[posts.length - 1].id + 1 : 1,title,content}
+    // posts.push(newPost);
+    // res.json(newPost);
 }
 
 // Update dữ liệu
