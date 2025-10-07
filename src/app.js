@@ -3,6 +3,9 @@ import router from "./routers";
 import morgan from "morgan";
 import mongoose from "mongoose";
 
+// Thư viện dùng để kiểm tra dữ liệu đầu vào
+import Joi from "joi";
+
 const app = express();
 
 // Middleware log request
@@ -34,6 +37,12 @@ app.use("/api/",router);
 app.get("/",(req,res)=>{
     res.send("Chào mừng bạn tới trang bán hàng");
 })
+
+// Joi
+const schema = Joi.object({
+  name: Joi.string().min(3).required(),
+  price: Joi.number().min(0).required(),
+});
 
 app.listen(3000, () => {
   console.log(`Server is running on port http://localhost:3000`);

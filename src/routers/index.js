@@ -2,6 +2,7 @@ import { Router } from "express";
 import productRouter from "./productRoutes.js";
 import userRouter from "./user";
 import postRouter from "./posts";
+import authorRouter from "./author.js";
 
 
 
@@ -24,6 +25,9 @@ router.use("/user",userRouter);
 
 //Product
 router.use("/products",productRouter);
+
+//Author
+router.use("/author",authorRouter);
 
 export default router;
 
