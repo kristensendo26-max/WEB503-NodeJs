@@ -18,3 +18,6 @@ export const validateRequest = (schema, target = "body") => {
         next();
     };
 };
+
+// Middleware validateRequest kiểm tra dữ liệu từ req.body, req.params, hoặc req.query.
+// Loại bỏ trường không hợp lệ (stripUnknown) và trả về lỗi chi tiết nếu không hợp lệ.

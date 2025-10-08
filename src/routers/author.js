@@ -1,22 +1,24 @@
 import { Router } from "express";
 import { addAuthor, deleteAuthor, getAuthorById, getAuthors, updateAuthor } from "../controllers/authorController";
+import { validateRequest } from "../middleware/validateRequest";
+import { createAuthorSchema, updateAuthorSchema } from "../validation/author.validation";
 
 const authorRouter = Router();
 
 
-productRouter.get('/', getAuthors);
+authorRouter.get('/', getAuthors);
 
 
-productRouter.get('/:id', getAuthorById);
+authorRouter.get('/:id', getAuthorById);
+
+// Thêm tác giả
+authorRouter.post('/', validateRequest(createAuthorSchema), addAuthor);
+
+// Cập nhật tác giả 
+authorRouter.put('/:id', validateRequest(updateAuthorSchema), updateAuthor);
 
 
-productRouter.post('/', addAuthor);
-
-
-productRouter.put('/:id', updateAuthor);
-
-
-productRouter.delete('/:id', deleteAuthor);
+authorRouter.delete('/:id', deleteAuthor);
 
 
 
