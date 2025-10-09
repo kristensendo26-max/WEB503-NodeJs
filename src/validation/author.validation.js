@@ -5,7 +5,7 @@ import Joi from "joi";
 export const createAuthorSchema = Joi.object({
     name: Joi.string().required().min(2).max(100).messages({
         "string.base": "Tên tác giả phải là chuỗi",
-        "string.emty": "Tên tác giả không được để trống",
+        "string.empty": "Tên tác giả không được để trống",
         "string.max": "Tên sản phẩm không được vượt quá {#limit} ký tự",
         "string.min": "Tên tác giả phải có ít nhất {#limit} ký tự",
         "any.required": "Tên tác giả là bắt buộc",
@@ -24,7 +24,7 @@ export const createAuthorSchema = Joi.object({
 export const updateAuthorSchema = Joi.object({
     name: Joi.string().min(2).max(100).optional().messages({
         "string.base": "Tên tác giả phải là chuỗi",
-        "string.emty": "Tên tác giả không được để trống",
+        "string.empty": "Tên tác giả không được để trống",
         "string.max": "Tên sản phẩm không được vượt quá {#limit} ký tự",
         "string.min": "Tên tác giả phải có ít nhất {#limit} ký tự",
     }),
